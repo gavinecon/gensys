@@ -2,11 +2,11 @@ module Gensys
 
 using LinearAlgebra
 
-export gensysdt #, gensysct
+export gensysdt , gensysct
 
 include("extrafunctions.jl")
 include("gensysdt.jl")
-#include("gensysct.jl")
+include("gensysct.jl")
 
 end
 
