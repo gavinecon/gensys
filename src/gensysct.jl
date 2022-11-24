@@ -89,7 +89,7 @@ function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
     if isempty(bigev)
         exist = true
     else
-        exist = vecnorm(uz- A_mul_Bc(ueta, ueta) * uz, 2) < ϵ * n
+        exist = norm(uz- A_mul_Bc(ueta, ueta) * uz, 2) < ϵ * n
     end
     if isempty(bigev)
         existx = true
@@ -103,7 +103,7 @@ function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
         end
         zwtx = b2 * zwtx
         bigev, ux, dx, vx = decomposition_svdct!(zwtx)
-        existx = vecnorm(ux - A_mul_Bc(ueta, ueta) * ux, 2) < ϵ * n
+        existx = norm(ux - A_mul_Bc(ueta, ueta) * ux, 2) < ϵ * n
     end
     etawt1 = Ac_mul_B(qt1, Π)
     bigev, ueta1, deta1, veta1 = svd!(etawt1)
@@ -117,7 +117,7 @@ function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
     if isempty(veta1)
         unique = true
     else
-        unique = vecnorm(veta1- A_mul_Bc(veta, veta) * veta1, 2) < ϵ * n
+        unique = norm(veta1- A_mul_Bc(veta, veta) * veta1, 2) < ϵ * n
     end
     if unique
        eu[2] = 1
