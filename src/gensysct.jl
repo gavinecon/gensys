@@ -97,7 +97,7 @@ function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
         zwtx0 = b2 \ zwt
         zwtx = zwtx0
         M = b2 \ a2
-        M = rmul!(M, 1 / LinAlg.norm(M))
+        M = LinAlg.rmul!(M, 1 / LinAlg.norm(M))
         for i in 2:nunstab
             zwtx = hcat(M * zwtx, zwtx0)
         end
