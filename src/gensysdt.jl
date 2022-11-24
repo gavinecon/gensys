@@ -88,7 +88,7 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
         veta = zeros(neta, 0)
         bigev = 0
     else
-        bigev, ueta, deta, veta = decomposition_svd!(etawt)
+        bigev, ueta, deta, veta = svd!(etawt)
     end
 
     eu[1] = length(bigev) >= nunstab
@@ -107,14 +107,14 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
     else
         etawt1 = Ac_mul_B(qt1, Π)
         ndeta1 = min(n - nunstab, neta)
-        bigev, ueta1, deta1, veta1 = decomposition_svd!(etawt1)
+        bigev, ueta1, deta1, veta1 = svd!(etawt1)
     end
 
     if isempty(veta1)
         unique = true
     else
         loose = veta1 - A_mul_Bc(veta, veta) * veta1
-        loosesvd = svdfact!(loose)
+        loosesvd = svd!(loose)
         nloose = sum(abs(loosesvd.S) .> ϵ * n)
         unique = (nloose == 0)
     end
