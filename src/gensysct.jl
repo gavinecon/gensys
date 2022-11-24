@@ -139,7 +139,7 @@ function new_divct(F::LinAlg.GeneralizedSchur)
     for i in 1:n
         if abs(a[i, i]) > ϵ
             divhat = real(b[i, i] / a[i, i])
-            if (ϵ < divhat) && (divhat < div)
+            if (ϵ < divhat) && (divhat < divnum)
                 divnum = 0.5 * divhat
             end
         end
