@@ -2,5 +2,60 @@
 [![Coverage Status](https://coveralls.io/repos/quantecon/Gensys.jl/badge.svg?branch=master)](https://coveralls.io/r/quantecon/Gensys.jl?branch=master)
 # Install
 ```julia
-Pkg.clone("https://github.com/QuantEcon/Gensys.jl")
+Pkg.add(url="https://github.com/gavinecon/gensys")
+```
+
+# Example
+```julia
+import Pkg
+Pkg.add(url="https://github.com/gavinecon/gensys")
+using Gensys
+
+Γ0 = [
+1.0000    1.0000         0   -1.0000         0         0   -1.0000   -1.0000
+-1.5000    1.0000   -1.5000         0   -1.0000         0         0         0
+-0.5000         0    1.0000         0         0   -1.0000   -0.9800         0
+     0         0         0         0    1.0000         0         0         0
+     0         0         0    1.0000         0         0         0         0
+     0         0         0         0         0    1.0000         0         0
+1.0000         0         0         0         0         0         0         0
+     0         0    1.0000         0         0         0         0         0
+]
+
+Γ1 = [
+0         0         0         0         0         0         0         0
+0         0         0         0         0         0         0         0
+0         0         0         0         0         0         0         0
+0         0         0         0    0.8000         0         0         0
+0         0         0    0.8000         0         0         0         0
+0         0         0         0         0    0.8000         0         0
+0         0         0         0         0         0         0    1.0000
+0         0         0         0         0         0    1.0000         0
+]
+
+Ψ = [
+0     0     0
+0     0     0
+0     0     0
+0     0     1
+1     0     0
+0     1     0
+0     0     0
+0     0     0
+]
+
+Π = [
+0     0
+0     0
+0     0
+0     0
+0     0
+0     0
+0     1
+1     0
+]
+
+c = zeros(size(Γ0)[1], 1)
+
+G1, C, impact, qt, a, b, z, eu = Gensys.gensysdt(Γ0, Γ1, c, Ψ, Π)
 ```
