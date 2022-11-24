@@ -123,8 +123,8 @@ function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
        eu[2] = 1
     end
 
-    tmat = hcat(I(n - nunstab), -ueta1 * deta1 * Ac_mul_B(veta1, veta) * (deta \ ueta'))
-    G0 =  vcat(tmat * a, hcat(zeros(nunstab, n - nunstab), I(nunstab)))
+    tmat = hcat(LinAlg.I(n - nunstab), -ueta1 * deta1 * Ac_mul_B(veta1, veta) * (deta \ ueta'))
+    G0 =  vcat(tmat * a, hcat(zeros(nunstab, n - nunstab), LinAlg.I(nunstab)))
     G1 =  vcat(tmat * b, zeros(nunstab, n))
     G1 = G0 \ G1
     usix = (n - nunstab + 1):n
@@ -156,10 +156,10 @@ end
 
 
 function decomposition_svdct!(A)
-    Asvd = svd!(A)
+    Asvd = LinAlg.svd!(A)
     bigev = findall(Asvd.S .> ϵ)
     Au = Asvd.U[:, bigev]
-    Ad = diagm(Asvd.S[bigev])
+    Ad = LinAlg.diagm(Asvd.S[bigev])
     Av = Asvd.V[:, bigev]
     return bigev, Au, Ad, Av
 end
