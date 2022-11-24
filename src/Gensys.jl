@@ -1,7 +1,10 @@
 module Gensys
-using LinearAlgebra: LinearAlgebra as LinAlg
+
+using LinearAlgebra
+
 include("gensysdt.jl")
 include("gensysct.jl")
-export gensysdt,
-gensysct
+
+export gensysdt, gensysct
+
 end
