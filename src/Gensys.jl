@@ -6,7 +6,7 @@ export gensysdt, gensysct
 
 include("extrafunctions.jl")
 include("gensysdt.jl")
-include("gensysct.jl")
+include("gensysdt.jl")
 
 end
 
