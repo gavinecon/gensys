@@ -10,14 +10,14 @@ Solve
 
 $$
 \begin{pmatrix}
-a*y_t = a*\mathbb{E}_t[y_{t+1}] - i_t + \mathbb{E}_t[\pi_{t+1}] + e^{\pi}_{t} \\
-i_t = \phi_{\pi} \pi + \phi_y y_t + e^{i}_{t} \\
-\pi_t = \beta \mathbb{E}_t[\pi_{t+1}] + \kappa y_t + e^{y}_{t} \\
-e^{y}_t = \rho_\pi e^{y}_{t-1} + \varepsilon_t^{y} \\
-e^{i}_t = \rho_\pi e^{i}_{t-1} + \varepsilon_t^{i} \\
-e^{\pi}_t = \rho_\pi e^{\pi}_{t-1} + \varepsilon_t^{\pi} \\
-y_t - \mathbb{E}_{t-1}[y_t] = \eta_t^{y} \\
-\pi_t - \mathbb{E}_{t-1}[\pi_t] = \eta_t^{\pi}
+a*y(t) = a*\mathbb{E}[y(t+1)|I(t)] - i_t + \mathbb{E}[\pi (t+1) | I(t)] + e^{\pi}(t) \\
+i(t) = \phi_{\pi} \pi(t) + \phi_y y(t) + e^{i}(t) \\
+\pi (t) = \beta \mathbb{E}[\pi (t+1)|I(t)] + \kappa y(t) + e^{y}(t)\\
+e^{y}(t) = \rho_\pi e^{y}(t-1) + \varepsilon^{y} (t) \\
+e^{i}_t = \rho_\pi e^{i}_{t-1} + \varepsilon^{i} (t) \\
+e^{\pi}_t = \rho_\pi e^{\pi}_{t-1} + \varepsilon^{\pi} (t) \\
+y (t) - \mathbb{E}[y_t|I(t-1)] = \eta^{y} (t) \\
+\pi (t) - \mathbb{E}[\pi (t)|(I(t-1)] = \eta^{\pi} (t)
 \end{pmatrix}
 $$
 
