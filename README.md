@@ -10,9 +10,9 @@ Solve
 
 $$
 \begin{pmatrix}
-a*y_t = a*\mathbb{E}_t[y_{t+1}] - i_t + \mathbb{E}_t[\pi_{t+1}] + e^{\pi}_t \\
-i_t = \phi_{\pi} \pi + \phi_y y_t + e^{i}_t \\
-\pi_t = \beta \mathbb{E}_t[\pi_{t+1}] + \kappa y_t + e^{y}_t \\
+a*y_t = a*\mathbb{E}_t[y_{t+1}] - i_t + \mathbb{E}_t[\pi_{t+1}] + e^{\pi}_{t} \\
+i_t = \phi_{\pi} \pi + \phi_y y_t + e^{i}_{t} \\
+\pi_t = \beta \mathbb{E}_t[\pi_{t+1}] + \kappa y_t + e^{y}_{t} \\
 e^{y}_t = \rho_\pi e^{y}_{t-1} + \varepsilon_t^{y} \\
 e^{i}_t = \rho_\pi e^{i}_{t-1} + \varepsilon_t^{i} \\
 e^{\pi}_t = \rho_\pi e^{\pi}_{t-1} + \varepsilon_t^{\pi} \\
