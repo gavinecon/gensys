@@ -4,9 +4,9 @@
 """
 ```
 gensysct(Γ0, Γ1, c, Ψ, Π)
-gensysct(Γ0, Γ1, c, Ψ, Π, div)
+gensysct(Γ0, Γ1, c, Ψ, Π, divnum)
 gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π)
-gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, div)
+gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
 ```
 Generate state-space solution to canonical-form DSGE model.
 System given as
@@ -44,7 +44,7 @@ If `div` is omitted from argument list, a `div`>1 is calculated.
 const ϵ = sqrt(eps()) * 10
 
 function gensysct(Γ0, Γ1, c, Ψ, Π, args...)
-    F = schur!(complex(Γ0), complex(Γ1))
+    F = LinAlg.schur!(complex(Γ0), complex(Γ1))
     gensysct(F, c, Ψ, Π, args...)
 end
 
@@ -52,9 +52,9 @@ function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π)
     gensysct(F, c, Ψ, Π, new_divct(F))
 end
 
-function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, div)
+function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
     eu = [0, 0]
-    a, b = F[:S], F[:T]
+    a, b = F.S, F.T
     n = size(a, 1)
     
     for i in 1:n
@@ -62,14 +62,14 @@ function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, div)
             info("Coincident zeros.  Indeterminacy and/or nonexistence.")
             eu = [-2, -2]
             G1 = Array{Float64, 2}() ;  C = Array{Float64, 1}() ; impact = Array{Float64, 2}()
-            a, b, qt, z = FS[:S], FS[:T], FS[:Q], FS[:Z]
+            a, b, qt, z = FS.S, FS.T, FS.Q, FS.Z
             return G1, C, impact, qt', a, b, z, eu
         end
     end
-    movelast = Bool[(real(b[i, i] / a[i, i]) > div) || (abs(a[i, i]) < ϵ) for i in 1:n]
+    movelast = Bool[(real(b[i, i] / a[i, i]) > divnum) || (abs(a[i, i]) < ϵ) for i in 1:n]
     nunstab = sum(movelast)
     FS = ordschur!(F, !movelast)
-    a, b, qt, z = FS[:S], FS[:T], FS[:Q], FS[:Z]
+    a, b, qt, z = FS.S, FS.T, FS.Q, FS.Z
 
     qt1 = qt[:, 1:(n - nunstab)]
     qt2 = qt[:, (n - nunstab + 1):n]
@@ -133,26 +133,26 @@ end
 
 
 function new_divct(F::LinAlg.GeneralizedSchur)
-    a, b = F[:S], F[:T]
+    a, b = F.S, F.T
     n = size(a, 1)
-    div = 0.001
+    divnum = 0.001
     for i in 1:n
         if abs(a[i, i]) > ϵ
             divhat = real(b[i, i] / a[i, i])
             if (ϵ < divhat) && (divhat < div)
-                div = 0.5 * divhat
+                divnum = 0.5 * divhat
             end
         end
     end
-    return div
+    return divnum
 end
 
 
 function decomposition_svdct!(A)
     Asvd = svd!(A)
-    bigev = find(Asvd[:S] .> ϵ)
-    Au = Asvd[:U][:, bigev]
-    Ad = diagm(Asvd[:S][bigev])
-    Av = Asvd[:V][:, bigev]
+    bigev = findall(Asvd.S .> ϵ)
+    Au = Asvd.U[:, bigev]
+    Ad = diagm(Asvd.S[bigev])
+    Av = Asvd.V[:, bigev]
     return bigev, Au, Ad, Av
 end
