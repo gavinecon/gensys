@@ -7,7 +7,7 @@ Pkg.add(url="https://github.com/gavinecon/gensys")
 
 # Example
 Solve simple 3 equation model with autocorrelated shocks and white noise forecast errors.
-
+$$
 F1 = y - (Ey +(1/a)*(Epi - int) + epsy);
 F2 = int - (phipi*pi + phiy*y + epsint);
 F3 = pi - (beta*Epi + kappa*y + epspi);
@@ -16,6 +16,7 @@ F5 = epsy - (rhoy*Lepsy + ey);
 F6 = epspi - (rhopi*Lepspi + epi);
 F7 = y - LEy - etay;
 F8 = pi - LEpi - etapi;
+$$
 
 ```julia
 import Pkg
