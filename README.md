@@ -6,6 +6,14 @@ Pkg.add(url="https://github.com/gavinecon/gensys")
 ```
 
 # Example
+Solve
+
+$$
+\begin{pmatrix}
+a*y_t = a*\mathbb{E}_t[y_{t+1}] - i_t + \mathbb{E}_t[\pi_{t+1}] + e^{\pi}_t
+\end{pmatrix}
+$$
+
 ```julia
 import Pkg
 Pkg.add(url="https://github.com/gavinecon/gensys")
