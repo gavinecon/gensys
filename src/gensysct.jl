@@ -39,7 +39,14 @@ If `div` is omitted from argument list, a `div`>1 is calculated.
 * `eu==[-2,-2]` for coincident zeros.
 """
 
-
+function Ac_mul_B(a,b)
+    balls = a'*b
+    return balls
+end
+function A_mul_Bc(a,b)
+    balls = a*b'
+    return balls
+end
 
 const ϵ = sqrt(eps()) * 10
 
