@@ -77,7 +77,7 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
     a, b, qt, z = FS.S, FS.T, FS.Q, FS.Z
 
 
-    gev = hcat(diag(a), diag(b))
+    gev = hcat(LinAlg.diag(a), LinAlg.diag(b))
     qt1 = qt[:, 1:(n - nunstab)]
     qt2 = qt[:, (n - nunstab + 1):n]
     etawt = Ac_mul_B(qt2, Π)
@@ -129,8 +129,8 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
         info("Indeterminacy. $(nloose) loose endogeneous errors")
     end
 
-    tmat = hcat(I(n - nunstab), -(ueta * (deta \ veta') * veta1 * A_mul_Bc(deta1, ueta1))')
-    G0 = vcat(tmat * a, hcat(zeros(nunstab, n - nunstab), I(nunstab)))
+    tmat = hcat(LinAlg.I(n - nunstab), -(ueta * (deta \ veta') * veta1 * A_mul_Bc(deta1, ueta1))')
+    G0 = vcat(tmat * a, hcat(zeros(nunstab, n - nunstab), LinAlg.I(nunstab)))
     G1 = vcat(tmat * b, zeros(nunstab, n))
 
     # G0 is always non-singular because by construction there are no zeros on
@@ -146,7 +146,7 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
     fwt = -Busix \ Ac_mul_B(qt2, Ψ)
     ywt = G0I[:, usix]
 
-    loose = G0I * vcat(etawt1 * (I(neta) - A_mul_Bc(veta, veta)), zeros(nunstab, neta))
+    loose = G0I * vcat(etawt1 * (LinAlg.I(neta) - A_mul_Bc(veta, veta)), zeros(nunstab, neta))
 
     G1 = real(z * A_mul_Bc(G1, z))
     C = real(z * C)
@@ -175,10 +175,10 @@ end
 
 
 function decomposition_svd!(A)
-    Asvd = svd!(A)
+    Asvd = LinAlg.svd!(A)
     bigev = findall(Asvd.S .> ϵ)
     Au = Asvd.U[:, bigev]
-    Ad = diagm(Asvd.S[bigev])
+    Ad = LinAlg.diagm(Asvd.S[bigev])
     Av = Asvd.V[:, bigev]
     return bigev, Au, Ad, Av
 end
