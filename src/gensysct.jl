@@ -106,7 +106,7 @@ function gensysct(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
         existx = LinAlg.norm(ux - A_mul_Bc(ueta, ueta) * ux, 2) < ϵ * n
     end
     etawt1 = Ac_mul_B(qt1, Π)
-    bigev, ueta1, deta1, veta1 = svd!(etawt1)
+    bigev, ueta1, deta1, veta1 = decomposition_svdct!(etawt1)
     if existx | (nunstab == 0)
        eu[1] = 1
     else
