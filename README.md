@@ -13,13 +13,14 @@ $$
 a*y(t) = a*\mathbb{E}[y(t+1)|I(t)] - i_t + \mathbb{E}[\pi (t+1) | I(t)] + e^{\pi}(t) \\
 i(t) = \phi_{\pi} \pi(t) + \phi_y y(t) + e^{i}(t) \\
 \pi (t) = \beta \mathbb{E}[\pi (t+1)|I(t)] + \kappa y(t) + e^{y}(t)\\
-e^{y}(t) = \rho_\pi e^{y}(t-1) + \varepsilon^{y} (t) \\
-e^{i}_t = \rho_\pi e^{i}_{t-1} + \varepsilon^{i} (t) \\
-e^{\pi}_t = \rho_\pi e^{\pi}_{t-1} + \varepsilon^{\pi} (t) \\
+e^{y}(t) = \rho_{y} e^{y}(t-1) + \varepsilon^{y} (t) \\
+e^{i}_t = \rho_{i} e^{i} (t-1) + \varepsilon^{i} (t) \\
+e^{\pi}_t = \rho_{\pi} e^{\pi} (t-1) + \varepsilon^{\pi} (t) \\
 y (t) - \mathbb{E}[y_t|I(t-1)] = \eta^{y} (t) \\
 \pi (t) - \mathbb{E}[\pi (t)|(I(t-1)] = \eta^{\pi} (t)
 \end{pmatrix}
 $$
+
 
 ```julia
 import Pkg
