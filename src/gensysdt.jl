@@ -129,8 +129,8 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
         info("Indeterminacy. $(nloose) loose endogeneous errors")
     end
 
-    tmat = hcat(eye(n - nunstab), -(ueta * (deta \ veta') * veta1 * A_mul_Bc(deta1, ueta1))')
-    G0 = vcat(tmat * a, hcat(zeros(nunstab, n - nunstab), eye(nunstab)))
+    tmat = hcat(I(n - nunstab), -(ueta * (deta \ veta') * veta1 * A_mul_Bc(deta1, ueta1))')
+    G0 = vcat(tmat * a, hcat(zeros(nunstab, n - nunstab), I(nunstab)))
     G1 = vcat(tmat * b, zeros(nunstab, n))
 
     # G0 is always non-singular because by construction there are no zeros on
@@ -146,7 +146,7 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
     fwt = -Busix \ Ac_mul_B(qt2, Ψ)
     ywt = G0I[:, usix]
 
-    loose = G0I * vcat(etawt1 * (eye(neta) - A_mul_Bc(veta, veta)), zeros(nunstab, neta))
+    loose = G0I * vcat(etawt1 * (I(neta) - A_mul_Bc(veta, veta)), zeros(nunstab, neta))
 
     G1 = real(z * A_mul_Bc(G1, z))
     C = real(z * C)
