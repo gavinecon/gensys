@@ -4,9 +4,9 @@
 """
 ```
 gensysdt(Γ0, Γ1, c, Ψ, Π)
-gensysdt(Γ0, Γ1, c, Ψ, Π, div)
+gensysdt(Γ0, Γ1, c, Ψ, Π, divnum)
 gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π)
-gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, div)
+gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
 ```
 Generate state-space solution to canonical-form DSGE model.
 System given as
@@ -36,7 +36,7 @@ types of `Γ0` and `Γ1`, to match the behavior of Matlab.  Matlab always uses t
 of the Schur decomposition, even if the inputs are real numbers.
 """
 function gensysdt(Γ0, Γ1, c, Ψ, Π, args...)
-    F = schur!(complex(Γ0), complex(Γ1))
+    F = LinAlg.schur!(complex(Γ0), complex(Γ1))
     gensysdt(F, c, Ψ, Π, args...)
 end
 
@@ -47,9 +47,9 @@ end
 const ϵ = sqrt(eps()) * 10
 
 # Method that does the real work. Work directly on the decomposition F
-function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, div)
+function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
     eu = [0, 0]
-    a, b = F[:S], F[:T]
+    a, b = F.S, F.T
     n = size(a, 1)
 
     for i in 1:n
@@ -61,10 +61,10 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, div)
         end
     end
 
-    movelast = Bool[abs(b[i, i]) > div * abs(a[i, i]) for i in 1:n]
+    movelast = Bool[abs(b[i, i]) > divnum * abs(a[i, i]) for i in 1:n]
     nunstab = sum(movelast)
     FS = ordschur!(F, !movelast)
-    a, b, qt, z = FS[:S], FS[:T], FS[:Q], FS[:Z]
+    a, b, qt, z = FS.S, FS.T, FS.Q, FS.Z
 
 
     gev = hcat(diag(a), diag(b))
@@ -109,7 +109,7 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, div)
     else
         loose = veta1 - A_mul_Bc(veta, veta) * veta1
         loosesvd = svdfact!(loose)
-        nloose = sum(abs(loosesvd[:S]) .> ϵ * n)
+        nloose = sum(abs(loosesvd.S) .> ϵ * n)
         unique = (nloose == 0)
     end
 
@@ -149,26 +149,26 @@ end
 
 
 function new_div(F::LinAlg.GeneralizedSchur)
-    a, b = F[:S], F[:T]
+    a, b = F.S, F.T
     n = size(a, 1)
-    div = 1.01
+    divnum = 1.01
     for i in 1:n
         if abs(a[i, i]) > 0
             divhat = abs(b[i, i] / a[i, i])
-            if (1 + ϵ < divhat) && (divhat <= div)
-                div = 0.5 * (1 + divhat)
+            if (1 + ϵ < divhat) && (divhat <= divnum)
+                divnum = 0.5 * (1 + divhat)
             end
         end
     end
-    return div
+    return divnum
 end
 
 
 function decomposition_svd!(A)
     Asvd = svd!(A)
-    bigev = find(Asvd[:S] .> ϵ)
-    Au = Asvd[:U][:, bigev]
-    Ad = diagm(Asvd[:S][bigev])
-    Av = Asvd[:V][:, bigev]
+    bigev = findall(Asvd.S .> ϵ)
+    Au = Asvd.U[:, bigev]
+    Ad = diagm(Asvd.S[bigev])
+    Av = Asvd.V[:, bigev]
     return bigev, Au, Ad, Av
 end
