@@ -6,21 +6,16 @@ Pkg.add(url="https://github.com/gavinecon/gensys")
 ```
 
 # Example
-Solve
+Solve simple 3 equation model with autocorrelated shocks and white noise forecast errors.
 
-$$
-\begin{pmatrix}
-a*y(t) = a*\mathbb{E}[y(t+1)|I(t)] - i_t + \mathbb{E}[\pi (t+1) | I(t)] + e^{\pi}(t) \\
-i(t) = \phi_{\pi} \pi(t) + \phi_y y(t) + e^{i}(t) \\
-\pi (t) = \beta \mathbb{E}[\pi (t+1)|I(t)] + \kappa y(t) + e^{y}(t)\\
-e^{y}(t) = \rho_{y} e^{y}(t-1) + \varepsilon^{y} (t) \\
-e^{i}_t = \rho_{i} e^{i} (t-1) + \varepsilon^{i} (t) \\
-e^{\pi}_t = \rho_{\pi} e^{\pi} (t-1) + \varepsilon^{\pi} (t) \\
-y (t) - \mathbb{E}[y_t|I(t-1)] = \eta^{y} (t) \\
-\pi (t) - \mathbb{E}[\pi (t)|(I(t-1)] = \eta^{\pi} (t)
-\end{pmatrix}
-$$
-
+F1 = y - (Ey +(1/a)*(Epi - int) + epsy);
+F2 = int - (phipi*pi + phiy*y + epsint);
+F3 = pi - (beta*Epi + kappa*y + epspi);
+F4 = epsint - (rhoint*Lepsint + eint);
+F5 = epsy - (rhoy*Lepsy + ey);
+F6 = epspi - (rhopi*Lepspi + epi);
+F7 = y - LEy - etay;
+F8 = pi - LEpi - etapi;
 
 ```julia
 import Pkg
