@@ -17,6 +17,9 @@ F6 = epspi - (rhopi*Lepspi + epi);
 F7 = y - LEy - etay;
 F8 = pi - LEpi - etapi;
 
+p1 = [a phipi phiy rhoy rhopi rhoint beta kappa];
+p2 = [1 1.5     1.5    .8 .8  .8 0.98 0.5];
+
 
 ```julia
 import Pkg
