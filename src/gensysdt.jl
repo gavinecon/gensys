@@ -40,6 +40,10 @@ function Ac_mul_B(a,b)
     balls = a'*b
     return balls
 end
+function A_mul_Bc(a,b)
+    balls = a*b'
+    return balls
+end
    
 function gensysdt(Γ0, Γ1, c, Ψ, Π, args...)
     F = LinAlg.schur!(complex(Γ0), complex(Γ1))
