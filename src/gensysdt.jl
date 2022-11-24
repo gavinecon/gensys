@@ -35,6 +35,12 @@ We constrain Julia to use the complex version of the `schurfact` routine regardl
 types of `Γ0` and `Γ1`, to match the behavior of Matlab.  Matlab always uses the complex version
 of the Schur decomposition, even if the inputs are real numbers.
 """
+
+function Ac_mul_B(a,b)
+    balls = a'*b
+    return balls
+end
+   
 function gensysdt(Γ0, Γ1, c, Ψ, Π, args...)
     F = LinAlg.schur!(complex(Γ0), complex(Γ1))
     gensysdt(F, c, Ψ, Π, args...)
