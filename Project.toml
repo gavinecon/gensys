@@ -1,0 +1,12 @@
+name = "Gensys"                                                                                  
+uuid = "0893268e-6fa2-4b5d-b170-c20920fe9295"                                                                      
+version = "0.1.0"   
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[extras]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[targets]
+test = ["LinearAlgebra"]
