@@ -69,7 +69,7 @@ function gensysdt(F::LinAlg.GeneralizedSchur, c, Ψ, Π, divnum)
 
     movelast = Bool[abs(b[i, i]) > divnum * abs(a[i, i]) for i in 1:n]
     nunstab = sum(movelast)
-    FS = LinAlg.ordschur!(F, !movelast)
+    FS = LinAlg.ordschur!(F, movelast)
     a, b, qt, z = FS.S, FS.T, FS.Q, FS.Z
 
 
